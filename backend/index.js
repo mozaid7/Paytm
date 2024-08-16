@@ -9,3 +9,4 @@ const mainRouter = require("./routes/index");
 const app = express(); 
 
 app.use("/app/v1", mainRouter);
+app.listen(3000);
