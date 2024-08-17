@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use("/app/v1", mainRouter);
 
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("Server running on port 3000");
   });
+ 

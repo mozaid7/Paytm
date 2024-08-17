@@ -13,51 +13,57 @@ const signupSchema = zod.object({
     password: zod.string()
 })
 
- router.post("/signup", async (req, res) => {
-    const {success} = signupSchema.safeParse(req.body);
-    if (!success) {
-        return res.json({
-            message: "Email already taken / Incorrect inputs"
-        })
+ router.post("/signup", async (req, res) => {const parseResult = signupBody.safeParse(req.body);
+
+    if (!parseResult.success) {
+      return res.status(400).json({
+        message: "Incorrect inputs",
+        errors: parseResult.error.errors,
+      });
     }
+  
     const existingUser = await User.findOne({
-        username: req.body.username
-    })
-
+      username: req.body.username,
+    });
+  
     if (existingUser) {
-        return res.status(411).json({
-            message: "Email already taken/Incorrect inputs"
-        })
+      return res.status(409).json({
+        message: "Email already taken",
+      });
     }
-
-    const user = await User.create({
+  
+    try {
+      const user = await User.create({
         username: req.body.username,
         password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-    })
-    const userId = user._id;
-    
-    await Account.create({
+      });
+      const userId = user._id;
+  
+      await Account.create({
         userId,
-        balance: 1 + Math.random() * 10000
-    })
-
-    const token = jwt.sign({
-        userId
-    }, JWT_SECRET);
-
-    res.json({
+        balance: 1 + Math.random() * 10000,
+      });
+  
+      const token = jwt.sign(
+        {
+          userId,
+        },
+        JWT_SECRET
+      );
+  
+      res.json({
         message: "User created successfully",
-        token: token
-    })
- })
-
-
- const signinBody = zod.object({
-    username: zod.string().email(),
-	password: zod.string()
-})
+        token: token,
+      });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).json({
+        message: "Server error while creating user",
+      });
+    }
+  })
 
 router.post("/signin", async (req, res) => {
     const { success } = signinBody.safeParse(req.body)
