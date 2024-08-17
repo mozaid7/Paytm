@@ -3,3 +3,4 @@ export function Heading({label}) {
       {label}
     </div>
 }
+export default Heading;

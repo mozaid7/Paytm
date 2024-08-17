@@ -8,3 +8,4 @@ export const Balance = ({ value }) => {
         </div>
     </div>
 }
+export default Balance;

@@ -4,4 +4,4 @@ export function SubHeading({label}) {
     </div>
   }
 
-  //fgh
+  export default SubHeading;

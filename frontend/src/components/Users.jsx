@@ -55,3 +55,4 @@ function User({user}) {
         </div>
     </div>
 }
+export default Users;
