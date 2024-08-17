@@ -37,6 +37,11 @@ const signupSchema = zod.object({
         lastName: req.body.lastName,
     })
     const userId = user._id;
+    
+    await Account.create({
+        userId,
+        balance: 1 + Math.random() * 10000
+    })
 
     const token = jwt.sign({
         userId
