@@ -49,3 +49,5 @@ module.exports = {
     User,
     Account
 }
+
+module.exports = { User, Account };
