@@ -26,10 +26,12 @@ export const Users = () => {
             }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
         </div>
         <div>
-        {users.map((user) => (
-          <User user={user} />
-        ))}
-      </div>
+          {Array.isArray(users) && users.length > 0 ? (
+             users.map((user, index) => <User key={index} user={user} />)
+             ) : (
+        <div>No users available</div>
+             )}
+        </div>
     </>
 }
 
