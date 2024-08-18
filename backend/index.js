@@ -1,16 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const mainRouter = require("./routes/index");
+const rootRouter = require("./routes/index");
 
-const app = express(); 
+const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Ensure JSON payloads are parsed
 
+app.use("/api/v1", rootRouter);
 
-app.use("/app/v1", mainRouter);
-
-app.listen(3001, () => {
-    console.log("Server running on port 3000");
-  });
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
  
